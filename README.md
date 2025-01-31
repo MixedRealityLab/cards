@@ -13,6 +13,8 @@ sudo docker run --rm -it --volume="$PWD:/srv/jekyll" -p 4000:4000 jekyll/jekyll 
 ```
 ```
 chown -R jekyll /usr/gem/
+bundle install
+gem install webrick
 ```
 
 Create (one time):
@@ -28,5 +30,10 @@ jekyll build
 
 Serve/test ()[http://localhost:4000]:
 ```
-sudo docker run --rm -it --name my-apache-app -p 8080:80 -v "$PWD":/usr/local/apache2/htdocs/ httpd:2.4
+cd docs
+sudo docker run --rm -it --name my-apache-app -p 8080:80 -v "$PWD"/_site:/usr/local/apache2/htdocs/cards/ httpd:2.4
+```
+or (not working):
+```
+jekyll serve
 ```

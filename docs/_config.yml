@@ -18,21 +18,36 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 
-title: Your awesome title
-email: your-email@example.com
+title: Cards for Responsibility
+email: bbzpjc@exmail.nottingham.ac.uk
 description: >- # this means to ignore newlines until "baseurl:"
-  Write an awesome description for your new site here. You can edit this
-  line in _config.yml. It will appear in your document head meta (for
-  Google search results) and in your feed.xml site description.
-baseurl: "" # the subpath of your site, e.g. /blog
+  This site brings together a number of (Responsible Innovation) card-based tools.
+  These have been developed by and with Horizon Digital Economy Research 
+  at the University of Nottingham.
+# the subpath of your site, e.g. /blog
+# if deployed for real...
+baseurl: "/cards" 
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
-twitter_username: jekyllrb
-github_username:  jekyll
+#twitter_username: jekyllrb
+#github_username:  jekyll
 
 # Build settings
 theme: minima
-plugins:
-  - jekyll-feed
+#plugins:
+
+collections:
+  decks:
+    output: true
+    order:
+      - riprompts.html
+
+defaults:
+  -
+    scope: 
+      type: "decks"
+    values:
+      layout: "deck"
+
 
 # Exclude from processing.
 # The following items will not be processed, by default.

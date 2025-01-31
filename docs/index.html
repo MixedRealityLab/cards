@@ -4,3 +4,8 @@
 
 layout: home
 ---
+<h2>Decks</h2>
+
+{% for deck in site.decks %}
+  <a href="{{site.baseurl}}{{ deck.url }}"><h3>{{ deck.title }}</h3></a>
+{% endfor %}
