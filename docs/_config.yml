@@ -35,6 +35,9 @@ url: "" # the base hostname & protocol for your site, e.g. http://example.com
 theme: minima
 #plugins:
 
+header_pages:
+  - about.html
+
 collections:
   decks:
     output: true

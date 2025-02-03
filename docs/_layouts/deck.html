@@ -5,13 +5,14 @@ layout: default
 .container {
     /* default layout is already max-width 800 */
     width: 100%;
+    position: relative;
 }
 .question {
     font-weight: bold;
 }
 .answer {
     width: 100%;
-    padding-bottom: 1em;
+    padding-bottom: 0;
     display: inline-block;
 }
 .text-2 {
@@ -20,6 +21,8 @@ layout: default
     width: 66%;
     box-sizing: border-box;
     padding: 1rem;
+    padding-left: 0;
+    padding-bottom: 0;
 }
 .text-3 {
     vertical-align: top;
@@ -27,32 +30,77 @@ layout: default
     width: 100%;
     box-sizing: border-box;
     padding: 1rem;
+    padding-left: 0;
+    padding-bottom: 0;
 }
-.cards-1 {
+.cards-1, .links-1, .image-1 {
     vertical-align: top;
     display: inline-block;
     box-sizing: border-box;
     width: 33%;
     padding: 1rem;
+    padding-bottom: 0;
+}
+.cards-1, .image-1 {
+    max-width: 375px;
+}
+.links {
+    display: block;
+}
+.links > div {
+    justify-content: center;
+    margin: 1rem;   
+    margin-top: 0;
+    display: flex;
+}
+a.link {
+    min-width: 30%;
+    flex: grow;
+    display: inline-block;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0.5rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    background-color: #000000;
+    color: #ffffff;
+    font-weight: normal;
+    border-radius: 1.5rem;
+    text-align: center;
+    overflow-wrap: break-word;
+}
+a.qrcode {
+    flex: grow;
+    display: inline-block;
+    margin-left: auto;
+    margin-right: auto;
+}
+a.qrcode > img {
+    height: auto;
+    width: 100%;
 }
 /* responsive sizing media queries... */
 @media all and (max-width: 750px) {
     .text-2 {
         width: 100%;
     }
-    .cards-1 {
+    .cards-1, .links-1, .image-1 {
         width: 50%;
     }
 }
 @media all and (max-width: 500px) {
-    .cards-1 {
+    .cards-1, .links-1, .image-1 {
         width: 100%;
     }
 }
 /* expander, based on accordian https://jekyllcodex.org/without-plugin/accordion/# */
+.expander {
+    margin-bottom: 1rem;
+}
 .expander > input {display: none;}
 .expander > label {display: block; cursor: pointer; padding-right: 1.3rem;}
-.expander > input + label + div {display: none; padding-bottom: 1.2rem;}
+.expander > input + label + div {display: none;}
+.expander > input:checked + label {color: #444;}
 .expander > input:checked + label + div {display: block;}
 .expander > label::before {content: "+"; font-weight: normal; font-size: 130%; line-height: 1.1rem; padding: 0; position: absolute; right: 0.5rem; transition: all 0.15s ease-in-out;}
 .expander > input:checked + label::before {transform: rotate(-45deg);}
@@ -60,29 +108,44 @@ layout: default
 </style>
 
 <div class="container">
-    <h2>{{ page.title }}</h2>
+    <h1>{{ page.title }}</h1>
 
 {{ content }}
 
 {% for section in page.sections %}
+{% if section.always != true %}
 <div class="expander">
     <input id="section{{ forloop.index }}" type="checkbox" />
     <label class="question" for="section{{ forloop.index }}">{{ section.text }}</label>
+{% endif %}
     <div class="answer">
         {% for chunk in section.chunks %}
         <div class="{{ chunk.type }}">
             {% if chunk.text %}
-                {{ chunk.text }}
-            {% endif %}            
-            {% if chunk.carousel %}
+                {{ chunk.text | markdownify }}
+            {% elsif chunk.carousel %}
                 <div style="width:100%; position:relative; display:block; padding: 0;">
                     {% include carousel.html height="150" unit="%" number=chunk.carousel %}
                 </div>
+            {% elsif chunk.links %}
+                <div class="links">
+                    {% for link in chunk.links %}
+                        {% if link.text %}
+                        <div><a class="link" href="{{link.url}}">{{link.text}}</a></div>
+                        {% elsif link.img %}
+                        <div><a class="qrcode" href="{{link.url}}"><img src="{{site.baseurl}}{{link.img}}"></a></div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            {% elsif chunk.img %}
+                <img src="{{site.baseurl}}{{chunk.img}}" style="height:auto;">
             {% endif %}
         </div>
         {% endfor %}
     </div>
+{% if section.always != true %}
 </div>
+{% endif %}
 {% endfor %}
 
 </div>

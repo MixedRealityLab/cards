@@ -2,10 +2,42 @@
 # Feel free to add content and custom Front Matter to this file.
 # To modify the layout, see https://jekyllrb.com/docs/themes/#overriding-theme-defaults
 
-layout: home
+layout: default
+title: Welcome!
 ---
-<h2>Decks</h2>
+<style>
+ul {
+    margin-left: 0;
+}
+li {
+    list-style: none;
+}
+h2 {
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+span.date {
+    color: #555;
+    font-size: smaller;
+}
+</style>
 
+<h1>{{page.title}}</h1>
+
+<p>Welcome to the Cards for Responsibility website.</p>
+<p>Please choose a deck (below) or see <a href="{{site.baseurl}}/about/">About</a> for more details.</p>
+
+<h2>Decks</h2>
+<ul>
 {% for deck in site.decks %}
-  <a href="{{site.baseurl}}{{ deck.url }}"><h3>{{ deck.title }}</h3></a>
+  <li><a href="{{site.baseurl}}{{ deck.url }}"><h3>{{ deck.title }}</h3></a></li>
 {% endfor %}
+</ul>
+
+<h2>News</h2>
+
+<ul>
+{% for post in site.posts %}
+    <li><a href="{{site.baseurl}}{{ post.url }}">{{post.title}}</a> <span class="date">{{post.date | date: "%-d %B %Y"}}</span></li>
+{% endfor %}
+</ul>
