@@ -39,7 +39,7 @@ collections:
   decks:
     output: true
     order:
-      - riprompts.html
+      - rricards.html
 
 defaults:
   -
