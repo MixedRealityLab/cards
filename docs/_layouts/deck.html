@@ -125,7 +125,7 @@ a.qrcode > img {
                 {{ chunk.text | markdownify }}
             {% elsif chunk.carousel %}
                 <div style="width:100%; position:relative; display:block; padding: 0;">
-                    {% include carousel.html height="150" unit="%" number=chunk.carousel %}
+                    {% include carousel.html height="120" unit="%" number=chunk.carousel %}
                 </div>
             {% elsif chunk.links %}
                 <div class="links">
